@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+websockets
+numpy
+pyaudio
+python-osc
+requests
+spotipy
+pyserial
+google-generativeai
+pywebview
+python-dotenv
