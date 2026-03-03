@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSync Pro Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
+    <style>
+        /* AI Dashboard Styles */
+        .ai-status-panel {
+            padding: 5px;
+        }
+
+        .meter-box .label {
+            font-size: 0.6rem;
+            color: #888;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .meter-bg {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .field-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .field-bar.blue {
+            background: #0088ff;
+            box-shadow: 0 0 8px #0088ff88;
+        }
+
+        .field-bar.cyan {
+            background: #00d2ff;
+            box-shadow: 0 0 8px #00d2ff88;
+        }
+
+        .field-bar.magenta {
+            background: #ff00ff;
+            box-shadow: 0 0 8px #ff00ff88;
+        }
+
+        .dot-sm {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #ai-event-ticker span.beat-mark {
+            color: #ff00ff;
+            font-weight: 800;
+        }
+
+        #ai-event-ticker span.pal-mark {
+            color: #00d2ff;
+        }
+
+        .glass-section.ai-active {
+            border-color: rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Premium Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loader-content">
+            <img src="logo.png" alt="AuraSync Logo" class="loader-logo">
+            <div class="spinner"></div>
+            <p id="loading-msg">Inizializzazione sistema...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="glass">
+            <div class="header-main">
+                <div class="brand-wrapper">
+                    <img src="logo.png" alt="AuraSync Logo" class="header-logo">
+                    <div class="brand-text">
+                        <h1>AuraSync</h1>
+                        <p class="subtitle">Pro Lighting Controller</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div id="bpm-display" class="stat-box">
+                    <span class="label">BPM</span>
+                    <span id="bpm-val" class="value">0</span>
+                    <div id="header-beat-indicator" class="pulse-dot"></div>
+                </div>
+                <div class="stat-box">
+                    <button id="auto-lights-btn" class="auto-toggle-btn">AUTO LIGHTS: OFF</button>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Status</span>
+                    <span id="status" class="value">Disconnected</span>
+                </div>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="tab-btn active">Live Auto</a>
+                <a href="functions.html" class="tab-btn">Functions</a>
+                <a href="console.html" class="tab-btn">Console</a>
+                <a href="generative.html" class="tab-btn">Generative</a>
+                <a href="timeline.html" class="tab-btn">Timeline</a>
+                <a href="fixtures.html" class="tab-btn">Fixtures</a>
+                <a href="simple_desk.html" class="tab-btn">Simple Desk</a>
+                <a href="setup.html" class="tab-btn">Setup</a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Persistent 3D Visualizer (The "Classic" Experience) -->
+            <section id="global-visualizer" class="glass-section"
+                style="margin-bottom: 20px; padding: 0; overflow: hidden; border: 1px solid rgba(0, 210, 255, 0.4); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+                <div id="visualizer-container"
+                    style="min-height: 600px; position: relative; background: #000; border-radius: 16px;">
+                    <!-- Minimalist Studio Overlay -->
+                    <div id="status-overlay"
+                        style="position: absolute; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); padding: 8px 16px; border-radius: 12px; border: 1px solid rgba(0, 210, 255, 0.3); color: #00ff88; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; gap: 10px; z-index: 100; pointer-events: none; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);">
+                        <div class="dot-live"
+                            style="width: 8px; height: 8px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88;">
+                        </div>
+                        <span>ENGINE: LIVE</span>
+                    </div>
+
+                    <div class="visualizer-hud-left" style="position: absolute; top: 20px; left: 190px; z-index: 10;">
+                        <button onclick="openLiveStudio()" class="secondary-btn"
+                            style="padding: 6px 14px; font-size: 0.7rem; background: rgba(0, 210, 255, 0.15); border: 1px solid rgba(0, 210, 255, 0.3); color: #00d2ff; border-radius: 8px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                            <span>🖥</span> POP-OUT STUDIO
+                        </button>
+                    </div>
+
+                    <!-- Interaction Hint -->
+                    <div class="visualizer-hint"
+                        style="position: absolute; bottom: 20px; right: 20px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.35); font-family: 'Inter', sans-serif; pointer-events: none; z-index: 10; letter-spacing: 0.5px;">
+                        🖱 TRASCINA PER RUOTARE · ⚙️ SCROLL PER ZOOM · 🖐 SHIFT+DRAG PER PAN
+                    </div>
+
+                    <div class="visualizer-designer-hud"
+                        style="position: absolute; top: 15px; right: 15px; z-index: 10; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="openFixtureManager()" class="primary-btn"
+                                style="padding: 6px 12px; font-size: 0.7rem; width: auto; background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.4); color: #00d2ff;">
+                                📦 FIXTURE LIB
+                            </button>
+                            <button id="toggle-design-btn" onclick="toggleDesignMode()" class="primary-btn"
+                                style="padding: 6px 12px; font-size: 0.7rem; width: auto; background: linear-gradient(135deg, #00d2ff, #0066cc);">
+                                🎨 DESIGN MODE: OFF
+                            </button>
+                        </div>
+                        <div id="design-controls"
+                            style="display: none; background: rgba(0,0,0,0.8); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                            <div
+                                style="font-size: 0.6rem; color: #888; margin-bottom: 6px; letter-spacing: 1px; font-weight: 800;">
+                                EDITING TOOLS</div>
+                            <div style="display: flex; gap: 6px;">
+                                <button onclick="setTransformMode('translate')" class="mini-btn-pro">MOVE (T)</button>
+                                <button onclick="setTransformMode('rotate')" class="mini-btn-pro">ROTA (R)</button>
+                                <button onclick="saveFixtureLayout()" class="mini-btn-pro"
+                                    style="color: #00ff88;">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="position:absolute; bottom:15px; right:15px; font-size:0.65rem; color:rgba(255,255,255,0.3); z-index:2; pointer-events:none; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px;">
+                        🖱 ROTATE · ↕ ZOOM · 🖐 PAN (SHIFT)
+                    </div>
+                </div>
+            </section>
+
+            <div id="auto-workspace" class="mode-container active">
+                <div class="dashboard-grid">
+                    <section id="analysis-monitor" class="glass-section">
+                        <h2>Monitor Analisi AI</h2>
+                        <div id="auto-waveform-container">
+                            <canvas id="auto-waveform-canvas"></canvas>
+                        </div>
+                        <div id="meters-grid" class="grid-3">
+                            <div class="meter-card" id="meter-low">
+                                <label>KICK / BASS</label>
+                                <div class="meter-bg">
+                                    <div class="meter-bar"></div>
+                                </div>
+                            </div>
+                            <div class="meter-card" id="meter-mid">
+                                <label>VOCALS / INSTR</label>
+                                <div class="meter-bg">
+                                    <div class="meter-bar"></div>
+                                </div>
+                            </div>
+                            <div class="meter-card" id="meter-high">
+                                <label>SNARE / PERC</label>
+                                <div class="meter-bg">
+                                    <div class="meter-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="spotify-integration-auto" class="glass-section">
+                        <h2>Spotify Web API (Live)</h2>
+                        <div id="spotify-now-playing"
+                            style="display: none; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px;">
+                            <!-- Top: Cover + Info + Vol -->
+                            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 12px;">
+                                <img id="spotify-cover" src="" alt="Album Cover"
+                                    style="width: 70px; height: 70px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                                <div style="flex: 1; min-width: 0;">
+                                    <h3 id="spotify-track-name"
+                                        style="margin: 0 0 4px 0; font-size: 1.1rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        Nessun brano</h3>
+                                    <p id="spotify-artist"
+                                        style="margin: 0; color: #aaa; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        -</p>
+                                </div>
+                            </div>
+
+                            <!-- Middle: Progress -->
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                <span id="spotify-time-current"
+                                    style="font-size: 0.75rem; color: #888; font-variant-numeric: tabular-nums;">0:00</span>
+                                <input type="range" id="spotify-progress" min="0" max="1000" value="0"
+                                    style="flex: 1; accent-color: #1db954;"
+                                    onchange="spotifyControl('seek', this.value)">
+                                <span id="spotify-time-total"
+                                    style="font-size: 0.75rem; color: #888; font-variant-numeric: tabular-nums;">0:00</span>
+                            </div>
+
+                            <!-- Bottom: Controls -->
+                            <div
+                                style="display: flex; justify-content: center; align-items: center; gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+                                <button id="spotify-shuffle" onclick="spotifyControl('shuffle')"
+                                    style="background: none; border: none; color: #888; cursor: pointer; font-size: 1rem; transition: color 0.2s;">🔀</button>
+                                <button onclick="spotifyControl('prev')"
+                                    style="background: none; border: none; color: white; cursor: pointer; font-size: 1.4rem; transition: transform 0.1s;">⏮</button>
+                                <button id="spotify-play-pause" onclick="spotifyControl('toggle')"
+                                    style="background: #1db954; border: none; color: white; cursor: pointer; font-size: 1.2rem; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(29, 185, 84, 0.4); transition: transform 0.1s;">⏸</button>
+                                <button onclick="spotifyControl('next')"
+                                    style="background: none; border: none; color: white; cursor: pointer; font-size: 1.4rem; transition: transform 0.1s;">⏭</button>
+                                <button id="spotify-repeat" onclick="spotifyControl('repeat')"
+                                    style="background: none; border: none; color: #888; cursor: pointer; font-size: 1rem; transition: color 0.2s;">🔁</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ── AI DESIGNER DASHBOARD (PRO) ────────────────────────────────────────── -->
+                    <section id="ai-designer-dashboard" class="glass-section full-width-card" style="margin-top: 15px;">
+                        <div class="ai-designer-grid" style="padding: 10px 0;">
+                            <!-- LEFT: Status & Palette -->
+                            <div class="ai-status-panel">
+                                <div class="label"
+                                    style="color:#00d2ff; font-weight:800; font-size:0.65rem; margin-bottom:2px; letter-spacing:1px;">
+                                    AI ENGINE STATUS</div>
+                                <div id="ai-section-val"
+                                    style="font-size: 0.65rem; color: #ff00ff; font-weight: 800; margin-bottom: 6px; letter-spacing: 1px;">
+                                    VERSE</div>
+                                <div id="ai-palette-name"
+                                    style="font-size: 1.2rem; font-weight: 900; background: linear-gradient(90deg, #fff, #00d2ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px;">
+                                    IDLE</div>
+                                <div
+                                    style="margin-top: 4px; display: flex; gap: 8px; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+                                    <span style="color: rgba(255,255,255,0.4)">UNITY: <span id="ai-unity-val"
+                                            style="color: #00ff88">80%</span></span>
+                                    <span style="color: rgba(255,255,255,0.4)">MODE: <span id="ai-symmetry-val"
+                                            style="color: #00ff88">MIRROR</span></span>
+                                </div>
+                                <div class="palette-preview" style="display:flex; gap:4px; margin-top:8px;">
+                                    <div id="pal-p" class="dot-sm"></div>
+                                    <div id="pal-s" class="dot-sm"></div>
+                                    <div id="pal-a" class="dot-sm"></div>
+                                </div>
+                            </div>
+
+                            <!-- MIDDLE: VU Meters -->
+                            <div class="ai-meters-panel">
+                                <div class="meter-box">
+                                    <div class="label">ENERGY</div>
+                                    <div class="meter-bg">
+                                        <div id="meter-energy" class="field-bar blue"></div>
+                                    </div>
+                                </div>
+                                <div class="meter-box">
+                                    <div class="label">WASH ACTIVE</div>
+                                    <div class="meter-bg">
+                                        <div id="meter-wash" class="field-bar cyan"></div>
+                                    </div>
+                                </div>
+                                <div class="meter-box">
+                                    <div class="label">BEAM STRIKE</div>
+                                    <div class="meter-bg">
+                                        <div id="meter-beam" class="field-bar magenta"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT: BPM & BEAT -->
+                            <div class="ai-beat-panel" style="text-align: right;">
+                                <div id="ai-bpm-val"
+                                    style="font-size: 1.6rem; font-weight: 900; color: #fff; line-height:1;">--</div>
+                                <div style="font-size:0.55rem; color:#888; font-weight:700;">BPM TRACKER</div>
+                                <div id="ai-beat-indicator"
+                                    style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); margin-top: 10px; border-radius: 3px; overflow: hidden;">
+                                    <div id="ai-beat-pulse"
+                                        style="width: 0%; height: 100%; background: #00d2ff; box-shadow: 0 0 10px #00d2ff;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NEW: Deep Sync Integration Status -->
+                            <div class="ai-sync-panel"
+                                style="padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.05);">
+                                <div class="label"
+                                    style="color:#00ff88; font-weight:800; font-size:0.6rem; letter-spacing:1px; margin-bottom:5px;">
+                                    DEEP SYNC</div>
+                                <div style="display:flex; flex-direction:column; gap:8px;">
+                                    <div id="sync-spotify"
+                                        style="display:flex; align-items:center; gap:8px; opacity:0.3; transition:opacity 0.5s;">
+                                        <span style="font-size:0.8rem;">🎧</span>
+                                        <span id="sync-spotify-status"
+                                            style="font-size:0.65rem; color:#fff; font-weight:600; font-variant-caps:all-small-caps;">Spotify
+                                            Offline</span>
+                                    </div>
+                                    <div id="sync-prodj"
+                                        style="display:flex; align-items:center; gap:8px; opacity:0.3; transition:opacity 0.5s;">
+                                        <span style="font-size:0.8rem;">🎚</span>
+                                        <span id="sync-prodj-status"
+                                            style="font-size:0.65rem; color:#fff; font-weight:600; font-variant-caps:all-small-caps;">Pro
+                                            DJ Link Offline</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM: Log Ticker -->
+                        <div id="ai-event-ticker"
+                            style="margin-top:12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; height: 32px; display: flex; align-items: center; gap: 12px; overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: #444;">
+                            <span style="color: #666; font-weight:700;">AI_LOG ></span>
+                            <div id="ticker-content" style="display:flex; gap:20px; white-space:nowrap;">System Ready.
+                                Waiting for audio...</div>
+                        </div>
+                    </section>
+
+                    <div id="lfo-list" class="lfo-grid">
+                        <!-- LFO cards will be here -->
+                    </div>
+
+                    <section id="fixtures-sidebar" class="glass-section">
+                        <h2>Componenti & Fixtures</h2>
+                        <div id="fixture-list"
+                            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 10px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+    </div>
+
+    </main>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FIXTURE MANAGER OVERLAY
+         ═══════════════════════════════════════════════════════ -->
+    <div id="fixture-manager-overlay" onclick="closeFixtureManager(event)"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; backdrop-filter:blur(5px);">
+        <div
+            style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#1a1a2e; border:1px solid rgba(255,255,255,0.15); border-radius:16px; padding:2rem; width:480px; max-height:70vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.8);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <h2 style="margin:0; color:#00d2ff; font-size:1.1rem;">📦 Fixture Manager</h2>
+                <button
+                    onclick="document.getElementById('fixture-manager-overlay').style.display='none'; renderFixtures();"
+                    style="background:none; border:none; color:#888; font-size:1.5rem; cursor:pointer; line-height:1;">×</button>
+            </div>
+            <div id="fixture-manager-list">
+                <p style="color:#888; text-align:center;">Caricamento...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="designer_rules.js?v=31"></script>
+    <script src="visualizer3d.js?v=31"></script>
+    <script src="console.js?v=31"></script>
+    <script src="timeline.js?v=31"></script>
+    <script src="app.js?v=31"></script>
+</body>
+
+</html>

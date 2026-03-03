@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSync Live Studio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #live-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        .hint {
+            position: absolute;
+            bottom: 10px;
+            right: 14px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Inter', sans-serif;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #status-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            pointer-events: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff88;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="status-overlay">
+        <div class="dot"></div>
+        <span id="engine-status">ENGINE: LIVE</span>
+    </div>
+    <div id="live-container"></div>
+    <div class="hint">🖱 trascina per ruotare · scroll per zoom</div>
+
+    <script src="designer_rules.js?v=31"></script>
+    <script src="visualizer3d.js?v=31"></script>
+    <script>
+        // Initialize visualizer full screen
+        const visualizer = new AuraVisualizer3D('live-container');
+
+        const statusSpan = document.getElementById('engine-status');
+        const statusDot = document.querySelector('#status-overlay .dot');
+
+        function updateStatus(text, type = 'live') {
+            if (statusSpan) statusSpan.textContent = `ENGINE: ${text}`;
+            if (statusDot) statusDot.className = `dot ${type}`;
+        }
+
+        // Load fixtures layout
+        let fixtures = [];
+        async function loadFixtures() {
+            updateStatus('LOADING FIXTURES...', 'warn');
+            try {
+                const res = await fetch('/api/workspace/fixtures');
+                fixtures = await res.json();
+                console.log("[Live Studio] Loaded Fixtures:", fixtures.length);
+                fixtures.forEach(f => visualizer.addFixture(f));
+
+                localStorage.setItem('aurasync_fixtures', JSON.stringify(fixtures));
+                updateStatus('READY', 'live');
+
+                connectWebSocket();
+            } catch (e) {
+                console.error("[Live Studio] Failed to load fixtures:", e);
+                const stored = localStorage.getItem('aurasync_fixtures');
+                if (stored) {
+                    fixtures = JSON.parse(stored);
+                    fixtures.forEach(f => visualizer.addFixture(f));
+                }
+                connectWebSocket();
+            }
+        }
+
+        function connectWebSocket() {
+            let wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            let wsUrl = `${wsProtocol}//${window.location.host}/ws`;
+
+            console.log("[Live Studio] Connecting to WebSocket...");
+            const socket = new WebSocket(wsUrl);
+
+            socket.onopen = () => {
+                console.log("[Live Studio] WebSocket Connected ✅");
+                fetch('/api/auto_lights/toggle', { method: 'POST', body: JSON.stringify({ enabled: true }) }).catch(() => { });
+            };
+
+            socket.onmessage = function (event) {
+                const data = JSON.parse(event.data);
+                if (data.type === 'dmx_update') {
+                    visualizer.heartbeat();
+                    if (fixtures && data.universes) {
+                        fixtures.forEach(fix => {
+                            const uniData = data.universes[fix.universe] || data.universes[String(fix.universe)];
+                            if (uniData) {
+                                visualizer.updateFixture(fix.id, fix.address, uniData, data.is_delta, fix.universe);
+                            }
+                        });
+                    }
+                } else if (data.type === 'audio_status' && data.color) {
+                    visualizer.setBeamColor(data.color);
+                }
+            };
+
+            socket.onerror = (err) => console.error("[Live Studio] WebSocket Error:", err);
+
+            socket.onclose = () => {
+                console.warn("[Live Studio] WebSocket Closed. Reconnecting...");
+                setTimeout(connectWebSocket, 1000);
+            };
+        }
+
+        loadFixtures();
+    </script>
+</body>
+
+</html>

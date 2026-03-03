@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.14.0</Version>
+  <Author>Luca Moni</Author>
+ </Creator>
+ <Manufacturer>Luca</Manufacturer>
+ <Model>Fontana Fredda</Model>
+ <Type>Dimmer</Type>
+ <Channel Name="off- spraying">
+  <Group Byte="0">Effect</Group>
+  <Capability Min="0" Max="9">OFF</Capability>
+  <Capability Min="10" Max="255">30%-100% Spraying</Capability>
+ </Channel>
+ <Channel Name="Warming">
+  <Group Byte="0">Maintenance</Group>
+  <Capability Min="0" Max="199">Warming Up</Capability>
+  <Capability Min="200" Max="255">Stopped Warming Up</Capability>
+ </Channel>
+ <Channel Name="Clean">
+  <Group Byte="0">Maintenance</Group>
+  <Capability Min="10" Max="255">Clean up leftover materials</Capability>
+ </Channel>
+ <Mode Name="Mod Unica">
+  <Channel Number="0" ActsOn="2">off- spraying</Channel>
+  <Channel Number="1">Warming</Channel>
+  <Channel Number="2">Clean</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

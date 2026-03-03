@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixture Manager - AuraSync Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
+    <style>
+        .fixture-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 20px;
+            height: calc(100vh - 120px);
+        }
+
+        .library-panel,
+        .patch-panel,
+        .inspector-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        .patch-grid-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(24px, 1fr));
+            gap: 2px;
+            align-content: start;
+        }
+
+        .dmx-cell {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dmx-cell:hover {
+            background: rgba(0, 210, 255, 0.2);
+            color: #fff;
+            border-color: #00d2ff;
+        }
+
+        .dmx-cell.used {
+            background: rgba(0, 210, 255, 0.8);
+            color: #fff;
+            border-color: #00d2ff;
+            font-weight: 800;
+        }
+
+        .library-item {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            margin-bottom: 8px;
+        }
+
+        .library-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .fixture-card {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .fixture-card.active {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        .inspector-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .universe-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Premium Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loader-content">
+            <img src="logo.png" alt="AuraSync Logo" class="loader-logo">
+            <div class="spinner"></div>
+            <p id="loading-msg">Inizializzazione sistema...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="glass">
+            <div class="header-main">
+                <div class="brand-wrapper">
+                    <img src="logo.png" alt="AuraSync Logo" class="header-logo">
+                    <div class="brand-text">
+                        <h1>AuraSync</h1>
+                        <p class="subtitle">Pro Lighting Controller</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div id="bpm-display" class="stat-box">
+                    <span class="label">BPM</span>
+                    <span id="bpm-val" class="value">0</span>
+                    <div id="header-beat-indicator" class="pulse-dot"></div>
+                </div>
+                <div class="stat-box">
+                    <button id="auto-lights-btn" class="auto-toggle-btn">AUTO LIGHTS: OFF</button>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Status</span>
+                    <span id="status" class="value">Disconnected</span>
+                </div>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="tab-btn">Live Auto</a>
+                <a href="functions.html" class="tab-btn">Functions</a>
+                <a href="console.html" class="tab-btn">Console</a>
+                <a href="timeline.html" class="tab-btn">Timeline</a>
+                <a href="fixtures.html" class="tab-btn active">Fixtures</a>
+                <a href="simple_desk.html" class="tab-btn">Simple Desk</a>
+                <a href="setup.html" class="tab-btn">Setup</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="fixture-layout">
+                <!-- PANEL 1: Library & Active List -->
+                <section class="glass-section library-panel">
+                    <h2>Library & Stage</h2>
+                    <div style="flex: 1; display:flex; flex-direction:column; overflow:hidden;">
+                        <input type="text" id="library-search" class="search-input" placeholder="Cerca fixture...">
+                        <div id="library-list" style="flex:1; overflow-y:auto; margin-bottom:15px;">
+                            <!-- Library items -->
+                        </div>
+                        <hr style="border-color: rgba(255,255,255,0.1); margin: 0 0 10px 0;">
+                        <div id="active-fixtures-list" style="flex:1; overflow-y:auto;">
+                            <!-- Active patch items -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL 2: Patch Grid & AI Stage Builder -->
+                <section class="glass-section patch-panel">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h2>Patch Bay</h2>
+                        <div class="universe-tabs">
+                            <button class="primary-btn universe-btn active" data-uni="0">Uni 0</button>
+                            <button class="primary-btn universe-btn" data-uni="1">Uni 1</button>
+                            <button class="primary-btn universe-btn" data-uni="2">Uni 2</button>
+                            <button class="primary-btn universe-btn" data-uni="3">Uni 3</button>
+                        </div>
+                    </div>
+                    <div id="patch-bay-container" class="patch-grid-wrapper">
+                        <!-- 512 cells -->
+                    </div>
+
+                    <!-- AI Stage Builder (Phase 5) -->
+                    <div
+                        style="margin-top: 20px; padding: 15px; background: rgba(0,210,255,0.05); border: 1px solid rgba(0,210,255,0.2); border-radius: 8px;">
+                        <h3 style="margin-top:0; color:#00d2ff;">3D AI Stage Builder</h3>
+                        <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">Carica una foto del palco per
+                            generare automaticamente le coordinate 3D dei fari patchati tramite AI Vision.</p>
+
+                        <div style="display:flex; gap:15px; align-items:stretch;">
+                            <div style="flex:1;">
+                                <input type="file" id="stage-photo-upload" accept="image/*" class="pro-input"
+                                    style="width:100%;">
+                                <button id="run-ai-builder-btn" class="primary-btn"
+                                    style="width:100%; margin-top:10px; background:linear-gradient(135deg, #cc00ff, #00d2ff); border:none;">
+                                    🧠 ANALIZZA FOTO E POSIZIONA IN 3D
+                                </button>
+                            </div>
+                            <div
+                                style="width: 150px; background:rgba(0,0,0,0.5); border-radius:6px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                                <img id="stage-preview-img" src="" alt="Anteprima Palco"
+                                    style="max-width:100%; max-height:100%; display:none;">
+                                <span id="stage-preview-placeholder"
+                                    style="font-size:0.7rem; color:#555;">Preview</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL 3: Inspector -->
+                <section class="glass-section inspector-panel">
+                    <h2>Inspector</h2>
+                    <div id="no-selection-msg"
+                        style="color:#888; font-size:0.9rem; text-align:center; margin-top:50px;">
+                        Seleziona una fixture per modificarne i parametri
+                    </div>
+                    <div id="fixture-inspector" class="inspector-content hidden">
+                        <div class="input-group">
+                            <label>Nome</label>
+                            <input type="text" id="inspect-name" class="pro-input">
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="input-group" style="flex:1;">
+                                <label>Universo</label>
+                                <input type="number" id="inspect-universe" class="pro-input" min="0" max="15">
+                            </div>
+                            <div class="input-group" style="flex:1;">
+                                <label>Indirizzo</label>
+                                <input type="number" id="inspect-address" class="pro-input" min="1" max="512">
+                            </div>
+                        </div>
+
+                        <h4
+                            style="margin:20px 0 10px 0; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px;">
+                            3D Position (Visualizer)</h4>
+                        <div style="display:flex; gap:8px;">
+                            <div class="input-group">
+                                <label>X (Left/Right)</label>
+                                <input type="number" id="inspect-x" class="pro-input" step="0.5">
+                            </div>
+                            <div class="input-group">
+                                <label>Y (Height)</label>
+                                <input type="number" id="inspect-y" class="pro-input" step="0.5">
+                            </div>
+                            <div class="input-group">
+                                <label>Z (Depth)</label>
+                                <input type="number" id="inspect-z" class="pro-input" step="0.5">
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:10px; margin-top:25px;">
+                            <button id="update-fixture-btn" class="primary-btn" style="flex:2;">Salva Modifiche</button>
+                            <button id="delete-fixture-btn" class="secondary-btn"
+                                style="flex:1; border-color:red; color:red;">Elimina</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="designer_rules.js?v=9"></script>
+    <script src="visualizer3d.js?v=9"></script>
+    <script src="console.js?v=9"></script>
+    <script src="timeline.js?v=9"></script>
+    <script src="app.js?v=9"></script>
+    <script src="fixtures.js?v=9"></script>
+</body>
+
+</html>

@@ -1,0 +1,993 @@
+{
+    "version": "1.0",
+    "timestamp": 1771954726.107397,
+    "workspace_path": "/Users/lucamoni/.gemini/antigravity/scratch/qlc-bridge/LUCI BASE.qxw",
+    "lfo_configs": {},
+    "spotify_connected": true,
+    "config": {
+        "bands": {
+            "low": {
+                "min_freq": 20,
+                "max_freq": 250,
+                "osc_path": "/qlc/button/1",
+                "threshold_multiplier": 1.4,
+                "min_energy": 0.1
+            },
+            "mid": {
+                "min_freq": 250,
+                "max_freq": 4000,
+                "osc_path": "/qlc/button/2",
+                "threshold_multiplier": 1.3,
+                "min_energy": 0.05
+            },
+            "high": {
+                "min_freq": 4000,
+                "max_freq": 20000,
+                "osc_path": "/qlc/button/3",
+                "threshold_multiplier": 1.2,
+                "min_energy": 0.02
+            }
+        },
+        "osc_settings": {
+            "ip": "127.0.0.1",
+            "port": 7700
+        },
+        "dmx_settings": {
+            "output_enabled": true,
+            "artnet_ip": "255.255.255.255",
+            "universes": 1
+        },
+        "pulse_delay": 0.05,
+        "bpm_sync_mode": "internal",
+        "spotify_client_id": "96d2fac9ebe948dbb18728f562336fb6",
+        "spotify_client_secret": "efbf1bd4b0524248a62c5e03e99278c9",
+        "preferred_device": "blackhole",
+        "last_workspace_path": "/Users/lucamoni/.gemini/antigravity/scratch/qlc-bridge/LUCI BASE.qxw"
+    },
+    "ui_state": {
+        "fixtureSettings": {},
+        "fixturesLayout": [
+            {
+                "id": "0",
+                "name": "head light 100w #1",
+                "universe": 0,
+                "address": 1,
+                "channels": 13,
+                "manufacturer": "Luca",
+                "model": "head light 100w",
+                "mode": "Mod 13",
+                "channel_details": [
+                    {
+                        "name": "Pan running",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Pan Fine",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Tilt running",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Tilt Fine",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Pan/Tilt speed",
+                        "group": "Speed"
+                    },
+                    {
+                        "name": "Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Color",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Gobo",
+                        "group": "Gobo"
+                    },
+                    {
+                        "name": "Prism motor operation",
+                        "group": "Prism"
+                    },
+                    {
+                        "name": "Color Effects",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Auto Mode",
+                        "group": "Maintenance"
+                    },
+                    {
+                        "name": "Reset",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mod 13": [
+                        "Pan running",
+                        "Pan Fine",
+                        "Tilt running",
+                        "Tilt Fine",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ],
+                    "Mod 11": [
+                        "Pan running",
+                        "Tilt running",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ]
+                }
+            },
+            {
+                "id": "1",
+                "name": "PAR New #2",
+                "universe": 0,
+                "address": 14,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "PAR New",
+                "mode": "Mod1",
+                "channel_details": [
+                    {
+                        "name": "Dimmer",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue LIght",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Empty",
+                        "group": "Nothing"
+                    },
+                    {
+                        "name": "Strobo",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Speed",
+                        "group": "Speed"
+                    }
+                ],
+                "modes": {
+                    "Mod1": [
+                        "Dimmer",
+                        "Red Light",
+                        "Green Light",
+                        "Blue LIght",
+                        "Empty",
+                        "Strobo",
+                        "Speed"
+                    ]
+                }
+            },
+            {
+                "id": "2",
+                "name": "head light 100w #3",
+                "universe": 0,
+                "address": 21,
+                "channels": 13,
+                "manufacturer": "Luca",
+                "model": "head light 100w",
+                "mode": "Mod 13",
+                "channel_details": [
+                    {
+                        "name": "Pan running",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Pan Fine",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Tilt running",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Tilt Fine",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Pan/Tilt speed",
+                        "group": "Speed"
+                    },
+                    {
+                        "name": "Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Color",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Gobo",
+                        "group": "Gobo"
+                    },
+                    {
+                        "name": "Prism motor operation",
+                        "group": "Prism"
+                    },
+                    {
+                        "name": "Color Effects",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Auto Mode",
+                        "group": "Maintenance"
+                    },
+                    {
+                        "name": "Reset",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mod 13": [
+                        "Pan running",
+                        "Pan Fine",
+                        "Tilt running",
+                        "Tilt Fine",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ],
+                    "Mod 11": [
+                        "Pan running",
+                        "Tilt running",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ]
+                }
+            },
+            {
+                "id": "3",
+                "name": "PAR New #4",
+                "universe": 0,
+                "address": 34,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "PAR New",
+                "mode": "Mod1",
+                "channel_details": [
+                    {
+                        "name": "Dimmer",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue LIght",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Empty",
+                        "group": "Nothing"
+                    },
+                    {
+                        "name": "Strobo",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Speed",
+                        "group": "Speed"
+                    }
+                ],
+                "modes": {
+                    "Mod1": [
+                        "Dimmer",
+                        "Red Light",
+                        "Green Light",
+                        "Blue LIght",
+                        "Empty",
+                        "Strobo",
+                        "Speed"
+                    ]
+                }
+            },
+            {
+                "id": "4",
+                "name": "head light 100w #5",
+                "universe": 0,
+                "address": 41,
+                "channels": 13,
+                "manufacturer": "Luca",
+                "model": "head light 100w",
+                "mode": "Mod 13",
+                "channel_details": [
+                    {
+                        "name": "Pan running",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Pan Fine",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Tilt running",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Tilt Fine",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Pan/Tilt speed",
+                        "group": "Speed"
+                    },
+                    {
+                        "name": "Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Color",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Gobo",
+                        "group": "Gobo"
+                    },
+                    {
+                        "name": "Prism motor operation",
+                        "group": "Prism"
+                    },
+                    {
+                        "name": "Color Effects",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Auto Mode",
+                        "group": "Maintenance"
+                    },
+                    {
+                        "name": "Reset",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mod 13": [
+                        "Pan running",
+                        "Pan Fine",
+                        "Tilt running",
+                        "Tilt Fine",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ],
+                    "Mod 11": [
+                        "Pan running",
+                        "Tilt running",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ]
+                }
+            },
+            {
+                "id": "5",
+                "name": "PAR New #6 ",
+                "universe": 0,
+                "address": 54,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "PAR New",
+                "mode": "Mod1",
+                "channel_details": [
+                    {
+                        "name": "Dimmer",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue LIght",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Empty",
+                        "group": "Nothing"
+                    },
+                    {
+                        "name": "Strobo",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Speed",
+                        "group": "Speed"
+                    }
+                ],
+                "modes": {
+                    "Mod1": [
+                        "Dimmer",
+                        "Red Light",
+                        "Green Light",
+                        "Blue LIght",
+                        "Empty",
+                        "Strobo",
+                        "Speed"
+                    ]
+                }
+            },
+            {
+                "id": "6",
+                "name": "head light 100w #7",
+                "universe": 0,
+                "address": 61,
+                "channels": 13,
+                "manufacturer": "Luca",
+                "model": "head light 100w",
+                "mode": "Mod 13",
+                "channel_details": [
+                    {
+                        "name": "Pan running",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Pan Fine",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Tilt running",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Tilt Fine",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Pan/Tilt speed",
+                        "group": "Speed"
+                    },
+                    {
+                        "name": "Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Color",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Gobo",
+                        "group": "Gobo"
+                    },
+                    {
+                        "name": "Prism motor operation",
+                        "group": "Prism"
+                    },
+                    {
+                        "name": "Color Effects",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Auto Mode",
+                        "group": "Maintenance"
+                    },
+                    {
+                        "name": "Reset",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mod 13": [
+                        "Pan running",
+                        "Pan Fine",
+                        "Tilt running",
+                        "Tilt Fine",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ],
+                    "Mod 11": [
+                        "Pan running",
+                        "Tilt running",
+                        "Pan/Tilt speed",
+                        "Dimming",
+                        "Strobe",
+                        "Color",
+                        "Gobo",
+                        "Prism motor operation",
+                        "Color Effects",
+                        "Auto Mode",
+                        "Reset"
+                    ]
+                }
+            },
+            {
+                "id": "7",
+                "name": "mini Head light #8",
+                "universe": 0,
+                "address": 74,
+                "channels": 9,
+                "manufacturer": "Luca",
+                "model": "mini head light",
+                "mode": "Mode 1",
+                "channel_details": [
+                    {
+                        "name": "Level",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Vertical Tilt",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Dimming and Stroboscopic",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Red dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "White dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Motor speed",
+                        "group": "Speed"
+                    },
+                    {
+                        "name": "Reset",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mode 1": [
+                        "Level",
+                        "Vertical Tilt",
+                        "Dimming and Stroboscopic",
+                        "Red dimming",
+                        "Green dimming",
+                        "Blue dimming",
+                        "White dimming",
+                        "Motor speed",
+                        "Reset"
+                    ]
+                }
+            },
+            {
+                "id": "8",
+                "name": "Par 36 #9",
+                "universe": 0,
+                "address": 83,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "Par 36",
+                "mode": "Mod 7",
+                "channel_details": [
+                    {
+                        "name": "Total Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Color Change",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Else",
+                        "group": "Nothing"
+                    }
+                ],
+                "modes": {
+                    "Mod 7": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light",
+                        "Color Change",
+                        "Strobe",
+                        "Else"
+                    ],
+                    "Mod 4": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light"
+                    ]
+                }
+            },
+            {
+                "id": "9",
+                "name": "Par 36 #10",
+                "universe": 0,
+                "address": 90,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "Par 36",
+                "mode": "Mod 7",
+                "channel_details": [
+                    {
+                        "name": "Total Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Color Change",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Else",
+                        "group": "Nothing"
+                    }
+                ],
+                "modes": {
+                    "Mod 7": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light",
+                        "Color Change",
+                        "Strobe",
+                        "Else"
+                    ],
+                    "Mod 4": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light"
+                    ]
+                }
+            },
+            {
+                "id": "10",
+                "name": "Par 36 #11",
+                "universe": 0,
+                "address": 97,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "Par 36",
+                "mode": "Mod 7",
+                "channel_details": [
+                    {
+                        "name": "Total Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Color Change",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Else",
+                        "group": "Nothing"
+                    }
+                ],
+                "modes": {
+                    "Mod 7": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light",
+                        "Color Change",
+                        "Strobe",
+                        "Else"
+                    ],
+                    "Mod 4": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light"
+                    ]
+                }
+            },
+            {
+                "id": "11",
+                "name": "Par 36 #12",
+                "universe": 0,
+                "address": 104,
+                "channels": 7,
+                "manufacturer": "Luca",
+                "model": "Par 36",
+                "mode": "Mod 7",
+                "channel_details": [
+                    {
+                        "name": "Total Dimming",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Red Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue Light",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Color Change",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Strobe",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Else",
+                        "group": "Nothing"
+                    }
+                ],
+                "modes": {
+                    "Mod 7": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light",
+                        "Color Change",
+                        "Strobe",
+                        "Else"
+                    ],
+                    "Mod 4": [
+                        "Total Dimming",
+                        "Red Light",
+                        "Green Light",
+                        "Blue Light"
+                    ]
+                }
+            },
+            {
+                "id": "12",
+                "name": "mini Head light #13",
+                "universe": 0,
+                "address": 111,
+                "channels": 9,
+                "manufacturer": "Luca",
+                "model": "mini head light",
+                "mode": "Mode 1",
+                "channel_details": [
+                    {
+                        "name": "Level",
+                        "group": "Pan"
+                    },
+                    {
+                        "name": "Vertical Tilt",
+                        "group": "Tilt"
+                    },
+                    {
+                        "name": "Dimming and Stroboscopic",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Red dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Green dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Blue dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "White dimming",
+                        "group": "Intensity"
+                    },
+                    {
+                        "name": "Motor speed",
+                        "group": "Speed"
+                    },
+                    {
+                        "name": "Reset",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mode 1": [
+                        "Level",
+                        "Vertical Tilt",
+                        "Dimming and Stroboscopic",
+                        "Red dimming",
+                        "Green dimming",
+                        "Blue dimming",
+                        "White dimming",
+                        "Motor speed",
+                        "Reset"
+                    ]
+                }
+            },
+            {
+                "id": "13",
+                "name": "Fontana Fredda #14",
+                "universe": 0,
+                "address": 120,
+                "channels": 3,
+                "manufacturer": "Luca",
+                "model": "Fontana Fredda",
+                "mode": "Mod Unica",
+                "channel_details": [
+                    {
+                        "name": "off- spraying",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Warming",
+                        "group": "Maintenance"
+                    },
+                    {
+                        "name": "Clean",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mod Unica": [
+                        "off- spraying",
+                        "Warming",
+                        "Clean"
+                    ]
+                }
+            },
+            {
+                "id": "14",
+                "name": "Fontana Fredda #15",
+                "universe": 0,
+                "address": 123,
+                "channels": 3,
+                "manufacturer": "Luca",
+                "model": "Fontana Fredda",
+                "mode": "Mod Unica",
+                "channel_details": [
+                    {
+                        "name": "off- spraying",
+                        "group": "Effect"
+                    },
+                    {
+                        "name": "Warming",
+                        "group": "Maintenance"
+                    },
+                    {
+                        "name": "Clean",
+                        "group": "Maintenance"
+                    }
+                ],
+                "modes": {
+                    "Mod Unica": [
+                        "off- spraying",
+                        "Warming",
+                        "Clean"
+                    ]
+                }
+            }
+        ]
+    }
+}

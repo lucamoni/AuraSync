@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.14.0</Version>
+  <Author>Luca Moni</Author>
+ </Creator>
+ <Manufacturer>Luca</Manufacturer>
+ <Model>Par 36</Model>
+ <Type>Dimmer</Type>
+ <Channel Name="Total Dimming">
+  <Group Byte="0">Effect</Group>
+  <Capability Min="0" Max="255">Total Dimming</Capability>
+ </Channel>
+ <Channel Name="Red Light">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Red</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#ff0600">Red Light</Capability>
+ </Channel>
+ <Channel Name="Green Light">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Green</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#00ff0f">Green Light</Capability>
+ </Channel>
+ <Channel Name="Blue Light">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Blue</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#0013ff">Blue Light</Capability>
+ </Channel>
+ <Channel Name="Color Change">
+  <Group Byte="0">Intensity</Group>
+  <Capability Min="0" Max="50">color constant</Capability>
+  <Capability Min="51" Max="255" Preset="SlowToFast">color change faster</Capability>
+ </Channel>
+ <Channel Name="Strobe">
+  <Group Byte="0">Effect</Group>
+  <Capability Min="0" Max="50">no flash</Capability>
+  <Capability Min="51" Max="255" Preset="StrobeSlowToFast">faster the strobe</Capability>
+ </Channel>
+ <Channel Name="Else">
+  <Group Byte="0">Nothing</Group>
+  <Capability Min="0" Max="255">Else</Capability>
+ </Channel>
+ <Mode Name="Mod 7">
+  <Channel Number="0" ActsOn="6">Total Dimming</Channel>
+  <Channel Number="1">Red Light</Channel>
+  <Channel Number="2">Green Light</Channel>
+  <Channel Number="3">Blue Light</Channel>
+  <Channel Number="4">Color Change</Channel>
+  <Channel Number="5">Strobe</Channel>
+  <Channel Number="6">Else</Channel>
+ </Mode>
+ <Mode Name="Mod 4">
+  <Channel Number="0" ActsOn="3">Total Dimming</Channel>
+  <Channel Number="1">Red Light</Channel>
+  <Channel Number="2">Green Light</Channel>
+  <Channel Number="3">Blue Light</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.14.0</Version>
+  <Author>Luca Moni</Author>
+ </Creator>
+ <Manufacturer>Luca</Manufacturer>
+ <Model>head light 100w</Model>
+ <Type>Dimmer</Type>
+ <Channel Name="Pan running">
+  <Group Byte="0">Pan</Group>
+  <Capability Min="0" Max="255">Pan running</Capability>
+ </Channel>
+ <Channel Name="Pan Fine">
+  <Group Byte="1">Pan</Group>
+  <Capability Min="0" Max="255">Pan Fine</Capability>
+ </Channel>
+ <Channel Name="Tilt running">
+  <Group Byte="0">Tilt</Group>
+  <Capability Min="0" Max="255">Tilt running</Capability>
+ </Channel>
+ <Channel Name="Tilt Fine">
+  <Group Byte="1">Tilt</Group>
+  <Capability Min="0" Max="255">Tilt Fine</Capability>
+ </Channel>
+ <Channel Name="Pan/Tilt speed">
+  <Group Byte="0">Speed</Group>
+  <Capability Min="0" Max="255">Pan/Tilt speed</Capability>
+ </Channel>
+ <Channel Name="Dimming">
+  <Group Byte="0">Effect</Group>
+  <Capability Min="0" Max="255">Dimming</Capability>
+ </Channel>
+ <Channel Name="Strobe">
+  <Group Byte="0">Effect</Group>
+  <Capability Min="0" Max="255">Stobe</Capability>
+ </Channel>
+ <Channel Name="Color">
+  <Group Byte="0">Intensity</Group>
+  <Capability Min="0" Max="159" Preset="ColorWheelIndex">Choose Color</Capability>
+  <Capability Min="160" Max="255">Change color automatically, from slow to fast</Capability>
+ </Channel>
+ <Channel Name="Gobo">
+  <Group Byte="0">Gobo</Group>
+  <Capability Min="0" Max="119">Fixed Gobo</Capability>
+  <Capability Min="120" Max="255">Change pattern automatically, from slow to fasrt</Capability>
+ </Channel>
+ <Channel Name="Prism motor operation">
+  <Group Byte="0">Prism</Group>
+  <Capability Min="0" Max="99">off</Capability>
+  <Capability Min="100" Max="127">the prism rotates from slow to fast</Capability>
+  <Capability Min="128" Max="255">the prism rotates from slow to fast</Capability>
+ </Channel>
+ <Channel Name="Color Effects">
+  <Group Byte="0">Intensity</Group>
+  <Capability Min="0" Max="126">off</Capability>
+  <Capability Min="127" Max="255">on</Capability>
+ </Channel>
+ <Channel Name="Auto Mode">
+  <Group Byte="0">Maintenance</Group>
+  <Capability Min="0" Max="59">off</Capability>
+  <Capability Min="60" Max="159">Auto Mode</Capability>
+  <Capability Min="160" Max="255">Sound Mode</Capability>
+ </Channel>
+ <Channel Name="Reset">
+  <Group Byte="0">Maintenance</Group>
+  <Capability Min="250" Max="255" Preset="ResetAll">Reset (5 seconds)</Capability>
+ </Channel>
+ <Mode Name="Mod 13">
+  <Channel Number="0" ActsOn="12">Pan running</Channel>
+  <Channel Number="1">Pan Fine</Channel>
+  <Channel Number="2">Tilt running</Channel>
+  <Channel Number="3">Tilt Fine</Channel>
+  <Channel Number="4">Pan/Tilt speed</Channel>
+  <Channel Number="5">Dimming</Channel>
+  <Channel Number="6">Strobe</Channel>
+  <Channel Number="7">Color</Channel>
+  <Channel Number="8">Gobo</Channel>
+  <Channel Number="9">Prism motor operation</Channel>
+  <Channel Number="10">Color Effects</Channel>
+  <Channel Number="11">Auto Mode</Channel>
+  <Channel Number="12">Reset</Channel>
+ </Mode>
+ <Mode Name="Mod 11">
+  <Channel Number="0" ActsOn="10">Pan running</Channel>
+  <Channel Number="1">Tilt running</Channel>
+  <Channel Number="2">Pan/Tilt speed</Channel>
+  <Channel Number="3">Dimming</Channel>
+  <Channel Number="4">Strobe</Channel>
+  <Channel Number="5">Color</Channel>
+  <Channel Number="6">Gobo</Channel>
+  <Channel Number="7">Prism motor operation</Channel>
+  <Channel Number="8">Color Effects</Channel>
+  <Channel Number="9">Auto Mode</Channel>
+  <Channel Number="10">Reset</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

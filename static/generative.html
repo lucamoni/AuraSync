@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Studio - AuraSync Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .generative-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr 350px;
+            gap: 20px;
+            height: calc(100vh - 180px);
+        }
+
+        .bezier-canvas-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #bezier-editor {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .control-panel {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .config-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .config-card h3 {
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
+            color: #00d2ff;
+        }
+
+        .path-point {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .path-point input {
+            width: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 4px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="glass">
+            <div class="header-main">
+                <div class="brand-wrapper">
+                    <img src="logo.png" alt="AuraSync Logo" class="header-logo">
+                    <div class="brand-text">
+                        <h1>AuraSync</h1>
+                        <p class="subtitle">Pro Lighting Controller</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="tab-btn">Live Auto</a>
+                <a href="functions.html" class="tab-btn">Functions</a>
+                <a href="console.html" class="tab-btn">Console</a>
+                <a href="generative.html" class="tab-btn active">Generative</a>
+                <a href="timeline.html" class="tab-btn">Timeline</a>
+                <a href="fixtures.html" class="tab-btn">Fixtures</a>
+                <a href="setup.html" class="tab-btn">Setup</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="generative-grid">
+                <!-- Left: LFO Chaining -->
+                <section class="glass-section control-panel">
+                    <h2>⛓ LFO Chaining</h2>
+                    <div id="chained-lfo-list">
+                        <!-- Chained LFO cards here -->
+                        <div class="config-card">
+                            <h3>Nuova Catena LFO</h3>
+                            <div id="chained-lfo-builder">
+                                <p style="font-size:0.7rem; color:#888;">Trascina gli oscillatori per combinarli.</p>
+                                <button class="secondary-btn" onclick="addLfoToChain()"
+                                    style="width:100%; margin-top:10px;">+ AGGIUNGI LFO</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Center: Bezier Editor -->
+                <section class="glass-section bezier-canvas-container">
+                    <div style="position:absolute; top:15px; left:15px; z-index:10;">
+                        <span class="status-overlay-v2">BEZIER PATH EDITOR</span>
+                    </div>
+                    <canvas id="bezier-editor"></canvas>
+                    <div style="position:absolute; bottom:15px; right:15px; display:flex; gap:10px;">
+                        <button class="primary-btn" onclick="applyBezierPath()"
+                            style="width:auto; padding:8px 20px;">APPLICA AL RIG</button>
+                        <button class="secondary-btn" onclick="clearBezier()"
+                            style="width:auto; padding:8px 20px;">RESET</button>
+                    </div>
+                </section>
+
+                <!-- Right: Active Effects & Properties -->
+                <section class="glass-section control-panel">
+                    <h2>⚙ Proprietà</h2>
+                    <div class="config-card">
+                        <h3>Assegnazione Fixture</h3>
+                        <select id="gen-fixture-select" class="setup-input" style="width:100%; height:32px;">
+                            <option value="">Seleziona Fixture...</option>
+                        </select>
+                    </div>
+                    <div id="item-properties">
+                        <p style="text-align:center; color:#555; margin-top:40px;">Seleziona un elemento per modificarlo
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="generative.js"></script>
+</body>
+
+</html>

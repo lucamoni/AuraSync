@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - AuraSync Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
+</head>
+
+<body>
+    <!-- Premium Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loader-content">
+            <img src="logo.png" alt="AuraSync Logo" class="loader-logo">
+            <div class="spinner"></div>
+            <p id="loading-msg">Inizializzazione sistema...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="glass">
+            <div class="header-main">
+                <div class="brand-wrapper">
+                    <img src="logo.png" alt="AuraSync Logo" class="header-logo">
+                    <div class="brand-text">
+                        <h1>AuraSync</h1>
+                        <p class="subtitle">Pro Lighting Controller</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div id="bpm-display" class="stat-box">
+                    <span class="label">BPM</span>
+                    <span id="bpm-val" class="value">0</span>
+                    <div id="header-beat-indicator" class="pulse-dot"></div>
+                </div>
+                <div class="stat-box">
+                    <button id="auto-lights-btn" class="auto-toggle-btn">AUTO LIGHTS: OFF</button>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Status</span>
+                    <span id="status" class="value">Disconnected</span>
+                </div>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="tab-btn">Live Auto</a>
+                <a href="functions.html" class="tab-btn">Functions</a>
+                <a href="console.html" class="tab-btn">Console</a>
+                <a href="generative.html" class="tab-btn">Generative</a>
+                <a href="timeline.html" class="tab-btn active">Timeline</a>
+                <a href="fixtures.html" class="tab-btn">Fixtures</a>
+                <a href="simple_desk.html" class="tab-btn">Simple Desk</a>
+                <a href="setup.html" class="tab-btn">Setup</a>
+            </div>
+        </header>
+
+        <main style="display:flex; gap:20px;">
+            <!-- Left Sidebar for Functions -->
+            <aside class="glass-section sidebar-functions"
+                style="width: 280px; display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <h3
+                    style="margin-top:0; font-size:1rem; color:#00d2ff; padding:10px 15px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                    Functions</h3>
+                <div id="timeline-function-list" class="sidebar-scroll-area"
+                    style="flex:1; overflow-y:auto; padding:10px;">
+                    <p style="color:#666; font-size:0.8rem; text-align:center;">Caricamento...</p>
+                </div>
+            </aside>
+
+            <!-- Tab Timeline: Show Manager -->
+            <div id="timeline-workspace" class="mode-container active" style="flex:1;">
+                <section class="glass-section timeline-frame">
+                    <div class="timeline-toolbar">
+                        <div class="transport-controls">
+                            <button id="btn-stop" class="secondary-btn">⏹</button>
+                            <button id="btn-play" class="primary-btn">▶</button>
+                            <button id="btn-record" class="secondary-btn">🔴</button>
+                        </div>
+                        <div id="time-display" class="time-readout">00:00.00</div>
+                        <div class="timeline-zoom">
+                            <input type="range" id="timeline-zoom-slider" min="10" max="200" value="50">
+                        </div>
+                    </div>
+                    <div class="timeline-tracks-container">
+                        <div class="timeline-ruler">
+                            <div class="playhead"></div>
+                        </div>
+                        <div id="track-audio" class="timeline-track audio-track">
+                            <div class="track-info">Audio Track</div>
+                            <div class="track-content">
+                                <canvas id="timeline-waveform-canvas"></canvas>
+                            </div>
+                        </div>
+                        <div id="timeline-dynamic-tracks">
+                            <div id="track-manual" class="timeline-track">
+                                <div class="track-info">Manual Track</div>
+                                <div class="track-content"></div>
+                            </div>
+                            <div id="track-beats" class="timeline-track">
+                                <div class="track-info">Beat Events</div>
+                                <div class="track-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="designer_rules.js?v=10"></script>
+    <script src="visualizer3d.js?v=10"></script>
+    <script src="console.js?v=10"></script>
+    <script src="timeline.js?v=10"></script>
+    <script src="app.js?v=10"></script>
+</body>
+
+</html>

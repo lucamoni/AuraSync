@@ -1,0 +1,48 @@
+lista funzionalità:
+Master Feature List (All-In-One Version)
+1. Core Engine & Protocolli (Hardware Communication)
+Native DMX Drivers: Integrazione diretta delle librerie per interfacce USB-DMX (Enttec, FTDI, Art-Net, sACN) senza software esterni.
+Multi-Universe Support: Gestione di più universi DMX simultanei per setup complessi.
+Low-Latency Processing: Motore scritto per garantire che il segnale DMX venga inviato a 40Hz (standard DMX) senza jitter, anche durante l'analisi AI pesante.
+
+2. QLC+ Ecosystem Compatibility (Import/Export)
+QLC+ Project Parser: Funzione di importazione per file .qxw. Il software legge le fixture, gli indirizzi e le scene pre-esistenti.
+Fixture Definition Support (.qxf): Capacità di leggere la vasta libreria di profili luci di QLC+.
+QLC+ Export Bridge: Funzione per esportare lo show generato dall'IA in un formato leggibile da QLC+ (mappe di canali e funzioni), garantendo portabilità.
+
+3. AI Audio Analysis "Pro" (The Brain)
+Real-Time Stem Separation: Separazione istantanea via AI di: Kick, Snare, Vocals, Instruments.
+Neural Beat Tracking: Analisi predittiva del tempo (BPM) che non si perde durante i fill di batteria o i cambi di ritmo.
+Musical Structure Recognition: Identificazione automatica di intro, chorus, bridge e drop per cambiare automaticamente il "mood" delle luci.
+Spectrum-to-DMX Mapping: Conversione diretta delle ampiezze di frequenza in valori DMX (es. Sub-bass -> Dimmer, High-frequencies -> Zoom/Strobo).
+
+4. Automazione & Generative Lighting
+Auto-Fixture Tagging: L'IA analizza i profili delle luci e le assegna a categorie (Wash, Spot, Beam, Matrix).
+Procedural Movement Engine: Generatore di movimenti (Pan/Tilt) basato su algoritmi matematici e fisici che evitano angoli morti.
+AI Color Palettes: Generazione automatica di schemi colore basati sulla teoria dei colori o sull'analisi dell'immagine di copertina del brano in riproduzione.
+Smart "Auto-Pilot": Modalità 100% automatica dove l'IA decide ogni parametro in base all'energia sonora rilevata.
+
+5. User Interface & Workflo
+Integrated DAW Timeline: Timeline multitraccia per l'editing manuale preciso sopra l'analisi dell'IA.
+Hybrid Virtual Console: Un pannello di controllo personalizzabile con fader, bottoni e pad touch-friendly.
+3D Visualizer Integrato: Motore grafico (es. basato su Three.js o OpenGL) per vedere le luci in un ambiente virtuale senza collegare l'hardware.
+System-Wide Audio Loopback: Cattura l'audio da qualsiasi fonte (Spotify, YouTube, DJ Software) senza cavi fisici.
+
+6. Funzionalità Advanced & Cloud
+Cloud Preset Library: Backup e condivisione di profili fixture e show via cloud.
+MIDI/OSC Remote Mapping: Supporto totale per controller hardware esterni (AKAI, Novation, ecc.).
+Automatic Gain Control (AGC): L'IA regola la sensibilità del microfono/input audio in tempo reale per evitare che le luci siano troppo "nervose" o troppo statiche.
+
+7. External DJ Connectivity
+Audio Input Selector: Gestione di ingressi multipli (Scheda audio esterna, Microfono, Loopback).
+BPM Source Auto-Switch: Logica che sceglie la fonte migliore (Priorità: 1. Link, 2. MIDI, 3. Analisi Audio AI).
+Offset Adjustment: Uno slider per correggere il ritardo (latency). Se le luci arrivano 50ms dopo il suono, l'utente può "anticipare" il trigger DMX.
+Visual Waveform Monitor: Visualizzazione della forma d'onda in ingresso per permettere al Light DJ di vedere visivamente i "drop" imminenti.
+Phase Sync: Un tasto "Nudge" (tipo quello dei CDJ) per allineare perfettamente il primo battito (il "Downbeat") se l'IA lo ha scambiato per un levare.
+
+
+TODO
+[X] - creare collegamento per inserire nuovi apparecchi e controllare/inserire/modificare le fixtures
+[X] - nell'interfaccia 3d voglio poter ricreare grazie all'ai tramite una foto o creando da li la struttura che ho per simularla e provare anche più scenari 
+[X] - voglio una sezione apparte per il caricamento di un progetto da qlc+ o per il caricamento delle fixtures
+[X] - vorrei salvare e riprendere i miei progetti e salvarli su file (per aprirli o qui o su qlc+ nel caso servissero li)

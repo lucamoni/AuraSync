@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.14.0</Version>
+  <Author>Luca Moni</Author>
+ </Creator>
+ <Manufacturer>Luca</Manufacturer>
+ <Model>mini head light</Model>
+ <Type>Dimmer</Type>
+ <Channel Name="Level">
+  <Group Byte="0">Pan</Group>
+  <Capability Min="0" Max="255">Pan Level</Capability>
+ </Channel>
+ <Channel Name="Vertical Tilt">
+  <Group Byte="0">Tilt</Group>
+  <Capability Min="0" Max="255">Tilt movement</Capability>
+ </Channel>
+ <Channel Name="Dimming and Stroboscopic">
+  <Group Byte="0">Effect</Group>
+  <Capability Min="0" Max="7">No effect</Capability>
+  <Capability Min="8" Max="134">Dimming</Capability>
+  <Capability Min="135" Max="239" Preset="StrobeSlowToFast">Strobe to low to fast</Capability>
+  <Capability Min="240" Max="255">Medallion</Capability>
+ </Channel>
+ <Channel Name="Red dimming">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Red</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#ff0b00">Red dimming</Capability>
+ </Channel>
+ <Channel Name="Green dimming">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Green</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#00ff15">Green dimming</Capability>
+ </Channel>
+ <Channel Name="Blue dimming">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Blue</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#0015ff">Blue dimming</Capability>
+ </Channel>
+ <Channel Name="White dimming">
+  <Group Byte="0">Intensity</Group>
+  <Colour>White</Colour>
+  <Capability Min="0" Max="255" Preset="ColorMacro" Res1="#ffffff">White dimming</Capability>
+ </Channel>
+ <Channel Name="Motor speed">
+  <Group Byte="0">Speed</Group>
+  <Capability Min="0" Max="255">Motor speed</Capability>
+ </Channel>
+ <Channel Name="Reset">
+  <Group Byte="0">Maintenance</Group>
+  <Capability Min="150" Max="200">Reset</Capability>
+ </Channel>
+ <Mode Name="Mode 1">
+  <Channel Number="0" ActsOn="8">Level</Channel>
+  <Channel Number="1">Vertical Tilt</Channel>
+  <Channel Number="2">Dimming and Stroboscopic</Channel>
+  <Channel Number="3">Red dimming</Channel>
+  <Channel Number="4">Green dimming</Channel>
+  <Channel Number="5">Blue dimming</Channel>
+  <Channel Number="6">White dimming</Channel>
+  <Channel Number="7">Motor speed</Channel>
+  <Channel Number="8">Reset</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>
