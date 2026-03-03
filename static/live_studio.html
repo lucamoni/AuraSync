@@ -144,10 +144,14 @@
                 if (data.type === 'dmx_update') {
                     visualizer.heartbeat();
                     if (fixtures && data.universes) {
+                        const universeIds = Object.keys(data.universes);
                         fixtures.forEach(fix => {
                             const uniData = data.universes[fix.universe] || data.universes[String(fix.universe)];
                             if (uniData) {
                                 visualizer.updateFixture(fix.id, fix.address, uniData, data.is_delta, fix.universe);
+                            } else if (fix.id === fixtures[0].id) {
+                                // Log only once per frame for the first fixture to avoid flooding
+                                if (Math.random() < 0.01) console.warn(`[3D] Universe Mismatch: Fixture ${fix.id} expects Uni ${fix.universe}, but server sent:`, universeIds);
                             }
                         });
                     }
